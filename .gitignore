@@ -1,0 +1,6 @@
+# ignore python stuff like pycache and virtual env directory
+__pycache__/
+venv/
+
+# ignore single files used for tests; like log output files
+dummy.txt
