@@ -5,17 +5,17 @@ r"""
 
     YYYY-MM-DD HH:MM:SS.MS [INTERFACE] : <Random-Number>
 
-    @TODO: Write the random generation code
-    @TODO: Do it so that upon getting Ctrl-C it will erase the file it writes to.
+    TODO: Write the random generation code
+    TODO: Do it so that upon getting Ctrl-C it will erase the file it writes to.
 """
 
-from log_generator import generate_log, NUMBER_OF_INTERFACES
+from .log_generator import generate_log, NUMBER_OF_INTERFACES
 from time import sleep
 
 
 SLEEP_TIME = 3 # 3 seconds inbetween updates to file
 FILE_PATH = "./dummy.txt"
-LOG_REGEX_FORMAT = "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3} \[\w+\] : [0-9]{2}"
+LOG_REGEX_FORMAT = "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3} \[\w+\] : [0-9]{1,2}"
 
 
 def update_logs():
@@ -26,7 +26,7 @@ def update_logs():
     try:
         while True:
             sleep(SLEEP_TIME)
-            _write_logs()
+            write_logs()
     except KeyboardInterrupt:
         clear_file()
         #print("Ended Program Execution")
@@ -39,14 +39,14 @@ def clear_file():
         exception which means a Ctrl+C button press in the terminal
         running this program.
 
-        @TODO: come up with better way to clear file or just outright delete it
+        TODO: come up with better way to clear file or just outright delete it
     """
 
     with open(FILE_PATH, "w") as opened_file:
         opened_file.write("")
 
 
-def _write_logs():
+def write_logs():
     r"""
         Writes logs to a file continuously, every 3 seconds or so.
     """
