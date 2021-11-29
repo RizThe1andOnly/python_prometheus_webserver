@@ -20,6 +20,9 @@ TIME_REGEX = re.compile("([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):
 MERIC_NAME_REGEX = re.compile("(?<=\[)\w+(?=\])")
 LOG_SPLITTER = " : " # splits the log metadata from the actual value; the value comes right after this string in the whole log string
 
+# line break option
+LINE_BREAK = "\n"
+
 def read_logs():
     r"""
         Read set of logs and format them. Read will be done every 4 seconds.
@@ -151,14 +154,19 @@ def format_logs(log:str):
     value = log[value_start_index:]
 
     # create formatted string:
-    metric_string_total = "#TYPE " + METRIC_NAME + " gauge\n"
+    metric_string_total = ""
     metric_string = METRIC_NAME + "{" \
         + "interface=\"" +  interface_name + "\""\
-        + "} " + value \
-        + " " + timestampstr
-    metric_string_total += metric_string + "\n"
+        + "} " + value #\
+        #+ " " + timestampstr
+    metric_string_total += metric_string + LINE_BREAK
 
     return metric_string_total
+
+
+def get_metric_typedef():
+    metric_typedef = "# TYPE " + METRIC_NAME + " gauge"
+    return metric_typedef
 
    
 

@@ -29,7 +29,7 @@ def read_loop(control_queue:Queue, shared_obj:Queue):
     while control_queue.qsize() == 0:
         #print(os.getpid())
         shared_obj.put(get_logs())
-        time.sleep(READ_SLEEP_TIME)
+        #time.sleep(READ_SLEEP_TIME)
 
 
 def write_loop(control_queue:Queue):
@@ -39,7 +39,4 @@ def write_loop(control_queue:Queue):
     while control_queue.qsize() == 0:
         #print(os.getpid())
         write_logs()
-        time.sleep(WRITE_SLEEP_TIME)
-
-
-    
+        #time.sleep(WRITE_SLEEP_TIME)

@@ -9,6 +9,7 @@ import threading
 from typing import Tuple
 import time
 from testlogs.log_suite_runner import read_loop, write_loop, Log
+from testlogs.log_reader import get_metric_typedef, LINE_BREAK
 
 
 def flask_app() -> Flask:
@@ -42,22 +43,19 @@ def flask_app() -> Flask:
             Provide metrics to prometheus.
         """
         
-        r"""
-        # get metrics or return prev 
         try:
-            inner_log_obj:Log = read_queue.get_nowait()
-            tobereturned = inner_log_obj.get_metrics()
+            tobereturned = get_metric_typedef() + LINE_BREAK + read_queue.get_nowait()
+            print(tobereturned)
             return tobereturned
-        except queue.Empty as e:
-            return ""
-        """
-
-        try:
-            return read_queue.get_nowait()
         except queue.Empty:
-            return "queue empty (?)"
+            return ""
     
 
     # return application
     return metric_app
 
+
+
+r"""
+invalid metric type "gauge<br>rando{interface=\"DuDumber\"} 74 1638163826<br>rando{interface=\"Dumber\"} 12 1007011825<br>"
+"""

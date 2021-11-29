@@ -1,0 +1,24 @@
+version: "3.9"
+services:
+  
+  prometheus:
+    # access url from other containers (grafana) within pg_network = http://python_prometheus_webserver-prometheus-1:9090
+    image: prom/prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - /mnt/c/Users/risla/Documents/Programming/python_prometheus_webserver/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - pg_network
+  
+  grafana:
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+    networks:
+      - pg_network
+
+
+networks:
+  pg_network:
+    driver: bridge
